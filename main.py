@@ -5,7 +5,7 @@ from getpass import getpass
 
 BASE_URL = "https://bb.ndsu.nodak.edu"
 
-username = input("Enter Username: ")
+username = input("Enter Blackboard Username: ")
 password = getpass("Enter Password (nothing will be displayed): ")
 
 
@@ -24,12 +24,12 @@ if not pdf_section.is_selected():
 
 def main():
     browser.get(BASE_URL)
-    usernameInput = browser.find_element_by_id("user_id")
-    usernameInput.send_keys(username)
-    passwordInput = browser.find_element_by_id("password")
-    passwordInput.send_keys(password)
-    loginButton = browser.find_element_by_id("entry-login")
-    loginButton.click()
+    username_input = browser.find_element_by_id("user_id")
+    username_input.send_keys(username)
+    password_input = browser.find_element_by_id("password")
+    password_input.send_keys(password)
+    login_button = browser.find_element_by_id("entry-login")
+    login_button.click()
 
     # go to courses
     browser.get(BASE_URL + "/webapps/portal/execute/tabs/tabAction?tab_tab_group_id=_2_1")
@@ -40,7 +40,7 @@ def main():
 
     # loop through the courses
     for course_name, course_link in course_names_and_links:
-        input("Press Enter to download {}".format(course_name))
+        input("{}\n****Press Enter to download".format(course_name))
         browser.get(course_link)
         course_content_link_elements = browser.find_elements_by_partial_link_text("Course ")
         course_content_links = [x.get_attribute("href") for x in course_content_link_elements]

@@ -18,3 +18,4 @@ python3 main.py
 ```
 
 * Follow directions in the terminal
+* The terminal will prompt you before each course is downloaded
