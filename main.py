@@ -5,6 +5,8 @@ from getpass import getpass
 
 BASE_URL = "https://bb.ndsu.nodak.edu"
 
+print("\n******Blackboard Downloader******\n\nSend Issues to muhasaho@gmail.com\n\n")
+
 username = input("Enter Blackboard Username: ")
 password = getpass("Enter Password (nothing will be displayed): ")
 
