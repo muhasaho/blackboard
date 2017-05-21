@@ -42,20 +42,29 @@ def main():
 
     # loop through the courses
     for course_name, course_link in course_names_and_links:
-        input("{}\n****Press Enter to download".format(course_name))
-        browser.get(course_link)
-        course_content_link_elements = browser.find_elements_by_partial_link_text("Course ")
-        course_content_links = [x.get_attribute("href") for x in course_content_link_elements]
+        user_selection = input("{}\n****Press Enter to download, S to skip: ".format(course_name))
 
-        # loop through the different Content Areas. eg `Course Content`, `Course Information`
-        for content_link in course_content_links:
-            browser.get(content_link)
-            content_box = browser.find_element_by_id("content")
-            file_or_folder_elements = content_box.find_elements_by_xpath(".//a[@href]")  # find all links
-            file_or_folder_texts_and_links = [(x.get_attribute("text"), x.get_attribute("href")) for x in file_or_folder_elements]
-            recursive_download(file_or_folder_texts_and_links)
+        if user_selection == "s" or user_selection == "S":
+            pass
+        else:
+            browser.get(course_link)
+
+            # loop through the different Content Areas. eg `Course Content`, `Course Information`
+            section_looper("Course ")
+            # loop through the `Assignments`
+            section_looper("Assignment")
+
     browser.quit()
 
+def section_looper(partial_link_text):
+    course_content_link_elements = browser.find_elements_by_partial_link_text(partial_link_text)
+    course_content_links = [x.get_attribute("href") for x in course_content_link_elements]
+    for content_link in course_content_links:
+        browser.get(content_link)
+        content_box = browser.find_element_by_id("content")
+        file_or_folder_elements = content_box.find_elements_by_xpath(".//a[@href]")  # find all links
+        file_or_folder_texts_and_links = [(x.get_attribute("text"), x.get_attribute("href")) for x in file_or_folder_elements]
+        recursive_download(file_or_folder_texts_and_links)
 
 def recursive_download(starting_file_or_folder_texts_and_links):
     starting_location = browser.current_url
